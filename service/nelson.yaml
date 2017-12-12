@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nelson
+  namespace: nelson-system
+  labels:
+    app: nelson
+spec:
+  selector:
+    app: nelson
+  ports:
+  - protocol: TCP
+    name: api
+    port: 9000
+    targetPort: 9000
+  - protocol: TCP
+    name: monitoring
+    port: 5775
+    targetPort: 5775
+  type: ClusterIP

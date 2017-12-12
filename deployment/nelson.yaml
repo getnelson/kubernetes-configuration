@@ -1,0 +1,49 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: nelson
+  namespace: nelson-system
+  labels:
+    app: nelson
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nelson
+  template:
+    metadata:
+      labels:
+        app: nelson
+    spec:
+      serviceAccountName: nelson
+      containers:
+        - name: nelson
+          # TODO: This needs to be changed to point at wherever Nelson's
+          # image is publised - while the Nelson Kubernetes integration
+          # is a WIP you will need to publish it yourself (presumably in
+          # an internal repository that you manage) and point to it here
+          image: registery.service.whatever.com/verizon/nelson:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9000
+            - containerPort: 5775
+          volumeMounts:
+            - name: "nelson-config"
+              mountPath: "/opt/application/conf"
+            - name: "nelson-db"
+              mountPath: "/opt/application/db"
+            - name: "nelson-logs"
+              mountPath: "/var/nelson/log"
+      # TODO: This needs to be changed to use Persistent Volumes, otherwise
+      # restarts will lose all data - how this is done will vary with your
+      # Kubernetes deployment. Please refer to the Kubernetes documentation
+      # on Persistent Volumes for more information
+      # https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+      volumes:
+        - name: "nelson-config"
+          configMap:
+            name: "nelson"
+        - name: "nelson-db"
+          emptyDir: {}
+        - name: "nelson-logs"
+          emptyDir: {}
