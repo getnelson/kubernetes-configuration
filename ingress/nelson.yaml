@@ -1,0 +1,11 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nelson
+  namespace: nelson-system
+  labels:
+    app: nelson
+spec:
+  backend:
+    serviceName: nelson
+    servicePort: 9000
