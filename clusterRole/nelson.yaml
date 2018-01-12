@@ -4,5 +4,5 @@ metadata:
   name: nelson
 rules:
   - apiGroups: ["", "apps", "batch"]
-    resources: ["deployments", "deployments/status", "cronjobs", "cronjobs/status", "jobs", "jobs/status"]
+    resources: ["deployments", "deployments/status", "services", "services/status", "pods", "pods/status", "cronjobs", "cronjobs/status", "jobs", "jobs/status"]
     verbs:     ["*"]

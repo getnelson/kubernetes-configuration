@@ -8,4 +8,4 @@ metadata:
 spec:
   backend:
     serviceName: nelson
-    servicePort: 9000
+    servicePort: api
